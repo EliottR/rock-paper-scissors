@@ -113,6 +113,7 @@ body {
   -ms-flex-pack: distribute;
       justify-content: space-around;
   display: none;
+  width: 100%;
 }
 
 .game__playContainer {
