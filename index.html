@@ -21,29 +21,41 @@
 <body>
   <header class="header">
     <h1 class="header__h1">rock<br>paper<br>scissors</h1>
-    <div class="header__scoreContainer">
+    <div id="scoreContainer" class="header__scoreContainer">
       <p>score</p>
       <p id="score">12</p>
     </div>
   </header>
 
-  <section class="content__playContainer">
-    <article class="content__playContainer__article">
-      <div class="content__playContainer__article__div">
-        <img src="./images/icon-rock.svg" alt="">
-      </div>
-      <p>you picked</p>
-    </article>
-    <article class="content__playContainer__article">
-      <!-- <div class="content__playContainer__article__div">
+  <main id="playContainer" class="game">
+    <section class="game__playContainer">
+      <article class="game__playContainer__article">
+        <div class="game__playContainer__article__div">
+          <img src="./images/icon-rock.svg" alt="">
+        </div>
+        <p>you picked</p>
+      </article>
+      <article class="game__playContainer__article">
+        <!-- <div class="game__playContainer__article__div">
         <img src="./images/icon-scissors.svg" alt="">
       </div> -->
-      <div class="content__playContainer__article__div__empty">
-      </div>
-      <p>the house picked</p>
-    </article>
-  </section>
-  <button class="content__rules">rules</button>
+        <div class="game__playContainer__article__div__empty">
+        </div>
+        <p>the house picked</p>
+      </article>
+    </section>
+    <button id="rulesButton" class="game__rules">rules</button>
+  </main>
+
+  <main class="home">
+    <h1 id="playButton">play</h1>
+  </main>
+
+  <div id="rules" class="rules">
+    <p>rules</p>
+    <img src="./images/image-rules.svg" height="35%" alt="">
+    <img id="crossRules" src="./images/icon-close.svg" width="5%" alt="">
+  </div>
 
   <footer class="footer">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by <a
@@ -51,7 +63,27 @@
   </footer>
 
   <script>
-    var background = document.getElementById('background');
+    var playButton = document.getElementById('playButton');
+    var scoreContainer = document.getElementById('scoreContainer');
+    var playContainer = document.getElementById('playContainer');
+    var rulesButton = document.getElementById('rulesButton');
+    var crossRules = document.getElementById('crossRules');
+    var rulesContainer = document.getElementById('rules');
+
+
+    playButton.onclick = function letsPlay() {
+      playButton.style.display = "none";
+      scoreContainer.style.display = "flex";
+      playContainer.style.display = "flex";
+    }
+
+    rulesButton.onclick = function showRules() {
+      rulesContainer.style.display = "flex"
+    }
+
+    crossRules.onclick = function closeRules() {
+      rulesContainer.style.display = "none"
+    }
   </script>
 </body>
 
