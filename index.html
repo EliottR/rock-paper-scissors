@@ -23,24 +23,24 @@
     <h1 class="header__h1">rock<br>paper<br>scissors</h1>
     <div id="scoreContainer" class="header__scoreContainer">
       <p>score</p>
-      <p id="score">12</p>
+      <p id="score"></p>
     </div>
   </header>
 
   <main id="playContainer" class="game">
     <section class="game__playContainer">
       <article class="game__playContainer__article">
-        <div class="game__playContainer__article__div">
+        <!-- <div class="game__playContainer__article__div">
           <img src="./images/icon-rock.svg" alt="">
-        </div>
-        <p>you picked</p>
+        </div> -->
+        <div class="game__playContainer__article__div__empty">
+          <p>click to pick</p>
       </article>
       <article class="game__playContainer__article">
         <!-- <div class="game__playContainer__article__div">
         <img src="./images/icon-scissors.svg" alt="">
       </div> -->
-        <div class="game__playContainer__article__div__empty">
-        </div>
+        <div class="game__playContainer__article__div__empty"></div>
         <p>the house picked</p>
       </article>
     </section>
@@ -69,6 +69,7 @@
     var rulesButton = document.getElementById('rulesButton');
     var crossRules = document.getElementById('crossRules');
     var rulesContainer = document.getElementById('rules');
+    var textScore = document.getElementById('score');
 
 
     playButton.onclick = function letsPlay() {
@@ -84,6 +85,14 @@
     crossRules.onclick = function closeRules() {
       rulesContainer.style.display = "none"
     }
+
+    //SCORE
+    var score = 0;
+
+    textScore.innerText = score;
+    // window.onload = function countScore() {
+    //   if 
+    // }
   </script>
 </body>
 
