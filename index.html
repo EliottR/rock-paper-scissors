@@ -30,22 +30,31 @@
   <main id="playContainer" class="game">
     <section class="game__playContainer">
       <article class="game__playContainer__article">
-        <!-- <div class="game__playContainer__article__div">
-          <img src="./images/icon-rock.svg" alt="">
-        </div> -->
-        <div class="game__playContainer__article__div__empty">
+        <div id="playerChoice" class="game__playContainer__article__div__empty">
           <p>click to pick</p>
+        </div>
       </article>
       <article class="game__playContainer__article">
-        <!-- <div class="game__playContainer__article__div">
-        <img src="./images/icon-scissors.svg" alt="">
-      </div> -->
-        <div class="game__playContainer__article__div__empty"></div>
+        <div class="game__playContainer__article__div scissors">
+          <img src="./images/icon-scissors.svg" alt="">
+        </div>
         <p>the house picked</p>
       </article>
     </section>
     <button id="rulesButton" class="game__rules">rules</button>
   </main>
+
+  <div id="choice" class="choiceContainer">
+    <section class="choiceContainer__section rock">
+      <img src="./images/icon-rock.svg" alt="">
+    </section>
+    <section class="choiceContainer__section paper">
+      <img src="./images/icon-paper.svg" alt="">
+    </section>
+    <section class="choiceContainer__section scissors">
+      <img src="./images/icon-scissors.svg" alt="">
+    </section>
+  </div>
 
   <main class="home">
     <h1 id="playButton">play</h1>
@@ -54,8 +63,11 @@
   <div id="rules" class="rules">
     <p>rules</p>
     <img src="./images/image-rules.svg" height="35%" alt="">
-    <img id="crossRules" src="./images/icon-close.svg" width="5%" alt="">
+    <img id="crossRules" src="./images/icon-close.svg" width="25rem" alt="">
   </div>
+
+  <div id="shadow"></div>
+
 
   <footer class="footer">
     Challenge by <a href="https://www.frontendmentor.io?ref=challenge" target="_blank">Frontend Mentor</a>. Coded by <a
@@ -70,6 +82,10 @@
     var crossRules = document.getElementById('crossRules');
     var rulesContainer = document.getElementById('rules');
     var textScore = document.getElementById('score');
+    var choice = document.getElementById('choice');
+    var playerChoice = document.getElementById('playerChoice');
+    let shadow = document.getElementById('shadow');
+    var attributeObject = document.getElementsByClassName('choiceContainer__section');
 
 
     playButton.onclick = function letsPlay() {
@@ -83,8 +99,116 @@
     }
 
     crossRules.onclick = function closeRules() {
-      rulesContainer.style.display = "none"
+      rulesContainer.style.removeProperty('display')
     }
+
+    //player choice
+    playerChoice.onclick = function clicToChoose() {
+      choice.style.display = "flex";
+      shadow.style.display = "block";
+    }
+
+
+    //shadow
+    shadow.onclick = function leaveShadow() {
+      shadow.style.removeProperty('display')
+      choice.style.removeProperty('display')
+    }
+
+
+    //choose object
+    choice.onclick = function chooseObject(e) {
+      if (e.target != choice) {
+        choice.style.removeProperty('display')
+        shadow.style.removeProperty('display')
+
+        if (playerChoice.classList.contains('game__playContainer__article__div__empty')) {
+          playerChoice.classList.replace('game__playContainer__article__div__empty', 'game__playContainer__article__div');
+          playerChoice.removeChild(playerChoice.firstElementChild);
+        }
+
+        var imgObject = document.createElement('img');
+        var index__data = e.target.attributes["index-data"].value;
+
+        switch (parseInt(index__data)) {
+          case 0:
+            if (playerChoice.classList.contains('paper')) {
+              playerChoice.classList.remove('paper')
+            }
+            if (playerChoice.classList.contains('scissors')) {
+              playerChoice.classList.remove('scissors')
+            }
+
+            playerChoice.classList.add('rock');
+
+            if (!playerChoice.firstElementChild) {
+              imgObject.src = "./images/icon-rock.svg";
+              playerChoice.appendChild(imgObject);
+            }
+            else if (playerChoice.firstElementChild.src.includes('paper') || playerChoice.firstElementChild.src.includes('scissors')) {
+              playerChoice.firstElementChild.src = "./images/icon-rock.svg"
+            }
+            break;
+
+          case 1:
+            if (playerChoice.classList.contains('rock')) {
+              playerChoice.classList.remove('rock')
+            }
+            if (playerChoice.classList.contains('scissors')) {
+              playerChoice.classList.remove('scissors')
+            }
+
+            playerChoice.classList.add('paper');
+
+            if (!playerChoice.firstElementChild) {
+              imgObject.src = "./images/icon-paper.svg";
+              playerChoice.appendChild(imgObject);
+            }
+            else if (playerChoice.firstElementChild.src.includes('rock') || playerChoice.firstElementChild.src.includes('scissors')) {
+              playerChoice.firstElementChild.src = './images/icon-paper.svg';
+            }
+            break;
+
+          case 2:
+            if (playerChoice.classList.contains('paper')) {
+              playerChoice.classList.remove('paper')
+            }
+            if (playerChoice.classList.contains('rock')) {
+              playerChoice.classList.remove('rock')
+            }
+
+            playerChoice.classList.add('scissors');
+
+            if (!playerChoice.firstElementChild) {
+              imgObject.src = "./images/icon-scissors.svg";
+              playerChoice.appendChild(imgObject);
+            }
+            else if (playerChoice.firstElementChild.src.includes('paper') || playerChoice.firstElementChild.src.includes('rock')) {
+              playerChoice.firstElementChild.src = './images/icon-scissors.svg';
+            }
+            break;
+        }
+      }
+    }
+
+    //setAttribute
+    var i = attributeObject.length;
+    var index_data = i - 1;
+
+    while (i--) {
+      attributeObject[i].setAttribute("index-data", index_data);
+      attributeObject[i].firstElementChild.setAttribute("index-data", index_data);
+      index_data--;
+    }
+
+    //place object in game
+
+
+
+
+    // document.onclick = function test(e) {
+    //   console.log(e.target.attributes["index-data"].textContent)
+    // }
 
     //SCORE
     var score = 0;

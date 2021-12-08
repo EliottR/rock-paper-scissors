@@ -14,3 +14,29 @@ body{
     align-items: center;
     height: 100vh;
 }
+
+#shadow {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: black;
+    opacity: 0.5;
+    z-index: 9;
+    display: none;
+  }
+
+.rock{
+    border: 1.1rem solid $rock_Gradient;
+    box-shadow: 0px 0.4rem 1px hsl(349, 55%, 36%);
+}
+
+.paper{
+    border: 1.1rem solid $paper_Gradient;
+    box-shadow: 0px 0.4rem 1px hsl(230, 54%, 44%);
+}
+
+.scissors{
+    border: 1.1rem solid $scissors_Gradient;
+    box-shadow: 0px 0.4rem 1px hsl(39, 88%, 38%);
+}
