@@ -29,9 +29,17 @@ If the player wins, they gain 1 point. If the computer wins, the player loses on
 
 #### Original
 
-- Paper beats Rock
-- Rock beats Scissors
-- Scissors beats Paper
+Paper > rock
+Paper < scissors
+Paper = paper
+
+Rock > scissors
+Rock < paper
+Rock = rock
+
+Scissors > paper
+Scissors < rock
+Scissors = scissors
 
 #### Bonus
 

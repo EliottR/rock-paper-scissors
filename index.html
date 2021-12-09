@@ -35,12 +35,14 @@
         </div>
       </article>
       <article class="game__playContainer__article">
-        <div class="game__playContainer__article__div scissors">
-          <img src="./images/icon-scissors.svg" alt="">
+        <div class="game__playContainer__article__div__empty">
         </div>
-        <p>the house picked</p>
+        <p>the house is waiting for your turn</p>
       </article>
     </section>
+
+    <p class="game__playContainer__bestScore">Meilleur score : <span id='bestScore'>0</span></p>
+
     <button id="rulesButton" class="game__rules">rules</button>
   </main>
 
@@ -86,6 +88,8 @@
     var playerChoice = document.getElementById('playerChoice');
     let shadow = document.getElementById('shadow');
     var attributeObject = document.getElementsByClassName('choiceContainer__section');
+    var game__playContainer__article = document.getElementsByClassName('game__playContainer__article');
+    var bestScore = document.getElementById('bestScore');
 
 
     playButton.onclick = function letsPlay() {
@@ -129,6 +133,12 @@
 
         var imgObject = document.createElement('img');
         var index__data = e.target.attributes["index-data"].value;
+
+        if (game__playContainer__article[0].lastElementChild.tagName == "DIV") {
+          var createP = document.createElement('p');
+          createP.textContent = "you picked"
+          game__playContainer__article[0].appendChild(createP)
+        }
 
         switch (parseInt(index__data)) {
           case 0:
@@ -188,6 +198,7 @@
             }
             break;
         }
+        robotChoose();
       }
     }
 
@@ -201,22 +212,136 @@
       index_data--;
     }
 
-    //place object in game
+    //robot choose object randomly
+    function robotChoose() {
+      if (game__playContainer__article[1].firstElementChild.classList.contains('game__playContainer__article__div__empty')) {
+        game__playContainer__article[1].firstElementChild.classList.remove('game__playContainer__article__div__empty');
+        game__playContainer__article[1].firstElementChild.classList.add('game__playContainer__article__div');
+      }
 
+      if (game__playContainer__article[1].lastElementChild.innerHTML == "the house is waiting for your turn") {
+        game__playContainer__article[1].lastElementChild.innerHTML = "the house picked";
+      }
 
+      // var arrayIndex = [1, 2, 3];
 
+      // var robotIndex = Math.floor(Math.random() * arrayIndex.length);
 
-    // document.onclick = function test(e) {
-    //   console.log(e.target.attributes["index-data"].textContent)
-    // }
+      var robotIndex = Math.floor(Math.random() * 3);
+      var imgObject1 = document.createElement('img');
+
+      switch (robotIndex) {
+        case 0:
+          if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('paper')
+          }
+          if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('scissors')
+          }
+
+          game__playContainer__article[1].firstElementChild.classList.add('rock');
+
+          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+            imgObject1.src = "./images/icon-rock.svg";
+            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+          }
+          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
+            game__playContainer__article[1].firstElementChild.firstElementChild.src = "./images/icon-rock.svg"
+          }
+          break;
+
+        case 1:
+          if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('rock')
+          }
+          if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('scissors')
+          }
+
+          game__playContainer__article[1].firstElementChild.classList.add('paper');
+
+          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+            imgObject1.src = "./images/icon-paper.svg";
+            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+          }
+          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
+            game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-paper.svg';
+          }
+          break;
+
+        case 2:
+          if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('paper')
+          }
+          if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+            game__playContainer__article[1].firstElementChild.classList.remove('rock')
+          }
+
+          game__playContainer__article[1].firstElementChild.classList.add('scissors');
+
+          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+            imgObject1.src = "./images/icon-scissors.svg";
+            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+          }
+          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock')) {
+            game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-scissors.svg';
+          }
+          break;
+      }
+
+      countScore()
+    }
 
     //SCORE
     var score = 0;
 
+    if (!localStorage.getItem("score")) {
+      localStorage.setItem("score", 0)
+    }
+
+    function countScore() {
+      if (playerChoice.classList.contains('rock') && game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+        score;
+      }
+      else if (playerChoice.classList.contains('rock') && game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+        score--;
+      }
+      else if (playerChoice.classList.contains('rock') && game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+        score++;
+      }
+
+      if (playerChoice.classList.contains('paper') && game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+        score++;
+      }
+      else if (playerChoice.classList.contains('paper') && game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+        score;
+      }
+      else if (playerChoice.classList.contains('paper') && game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+        score--;
+      }
+
+      if (playerChoice.classList.contains('scissors') && game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+        score--;
+      }
+      else if (playerChoice.classList.contains('scissors') && game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+        score++;
+      }
+      else if (playerChoice.classList.contains('scissors') && game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+        score;
+      }
+
+
+      if (score > localStorage.getItem("score")) {
+        localStorage.setItem("score", score)
+        bestScore.innerText = localStorage.getItem("score");
+      }
+
+      textScore.innerText = score;
+      console.log(bestScore.textContent)
+    }
+
     textScore.innerText = score;
-    // window.onload = function countScore() {
-    //   if 
-    // }
+    bestScore.innerText = localStorage.getItem("score");
   </script>
 </body>
 

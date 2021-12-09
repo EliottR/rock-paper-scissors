@@ -19,6 +19,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
+            max-width: 12rem;
 
             p{
                 text-align: center;
@@ -35,9 +36,6 @@
                 background-color: white;
                 box-sizing: border-box;
                 margin-bottom: 2rem;
-                // border: 1rem solid $rock_Gradient;
-                // box-shadow: 0px 0.4rem 1px hsl(349, 55%, 36%);
-                // filter: drop-shadow(0px 2px 5px rgb(22, 22, 22));
 
                 &__empty{
                     width: 9rem;
@@ -55,6 +53,10 @@
                     }
                 }
             }
+        }
+
+        &__bestScore{
+            text-align: center;
         }
     }
 
