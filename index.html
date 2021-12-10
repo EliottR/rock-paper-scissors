@@ -14,6 +14,9 @@
   <link href="https://fonts.googleapis.com/css2?family=Barlow+Semi+Condensed:wght@400;600;700&display=swap"
     rel="stylesheet">
 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/ScrollTrigger.min.js"></script>
+
   <title>Frontend Mentor | Rock, Paper, Scissors</title>
 
 </head>
@@ -90,26 +93,63 @@
     var attributeObject = document.getElementsByClassName('choiceContainer__section');
     var game__playContainer__article = document.getElementsByClassName('game__playContainer__article');
     var bestScore = document.getElementById('bestScore');
-
+    var footer = document.getElementsByClassName('footer')[0]
 
     playButton.onclick = function letsPlay() {
-      playButton.style.display = "none";
-      scoreContainer.style.display = "flex";
-      playContainer.style.display = "flex";
+      gsap.to(playButton, {
+        opacity: 0,
+      })
+
+      setTimeout(() => {
+        playButton.style.display = "none";
+        scoreContainer.style.display = "flex";
+        playContainer.style.display = "flex";
+        document.body.removeChild(document.getElementsByClassName('home')[0])
+        document.body.insertBefore(playContainer, footer)
+      }, 500);
     }
 
     rulesButton.onclick = function showRules() {
-      rulesContainer.style.display = "flex"
+      document.body.append(rulesContainer)
+
+      gsap.fromTo(rulesContainer, {
+        scale: 0
+      },
+        {
+          scale: 1,
+          duration: 0.3
+        })
     }
 
     crossRules.onclick = function closeRules() {
-      rulesContainer.style.removeProperty('display')
+
+      gsap.fromTo(rulesContainer, {
+        scale: 1
+      },
+        {
+          scale: 0,
+          duration: 0.3,
+          transformOrigin: "50% bottom"
+        })
+
+      setTimeout(() => {
+        document.body.removeChild(rulesContainer)
+      }, 300);
     }
 
     //player choice
     playerChoice.onclick = function clicToChoose() {
-      choice.style.display = "flex";
       shadow.style.display = "block";
+      document.body.append(shadow)
+      document.body.insertBefore(choice, footer)
+
+      gsap.fromTo(choice, {
+        scale: 0,
+      },
+        {
+          scale: 1,
+          duration: 0.3
+        })
     }
 
 
@@ -117,14 +157,16 @@
     shadow.onclick = function leaveShadow() {
       shadow.style.removeProperty('display')
       choice.style.removeProperty('display')
+      document.body.removeChild(shadow)
+      document.body.removeChild(choice)
     }
 
 
     //choose object
     choice.onclick = function chooseObject(e) {
       if (e.target != choice) {
-        choice.style.removeProperty('display')
-        shadow.style.removeProperty('display')
+        document.body.removeChild(choice)
+        document.body.removeChild(shadow)
 
         if (playerChoice.classList.contains('game__playContainer__article__div__empty')) {
           playerChoice.classList.replace('game__playContainer__article__div__empty', 'game__playContainer__article__div');
@@ -198,7 +240,12 @@
             }
             break;
         }
-        robotChoose();
+
+        // loopRobot();
+
+        setTimeout(() => {
+          robotChoose();
+        }, 500);
       }
     }
 
@@ -211,6 +258,14 @@
       attributeObject[i].firstElementChild.setAttribute("index-data", index_data);
       index_data--;
     }
+
+    //loop robot animation
+    // function loopRobot() {
+    // gsap
+    // .set(game__playContainer__article[1].firstElementChild, { class += "scissors" })
+    // .to(game__playContainer__article[1].firstElementChild, { css: { className: "+= paper" } })
+    // .to(game__playContainer__article[1].firstElementChild, { css: { className: "+= rock" } })
+    // }
 
     //robot choose object randomly
     function robotChoose() {
@@ -337,11 +392,17 @@
       }
 
       textScore.innerText = score;
-      console.log(bestScore.textContent)
     }
 
     textScore.innerText = score;
     bestScore.innerText = localStorage.getItem("score");
+
+    window.onload = function removePlayContainer() {
+      document.body.removeChild(document.getElementById('playContainer'))
+      document.body.removeChild(document.getElementById('choice'))
+      document.body.removeChild(document.getElementById('rules'))
+      document.body.removeChild(document.getElementById('shadow'))
+    }
   </script>
 </body>
 
