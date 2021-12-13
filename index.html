@@ -93,20 +93,31 @@
     var attributeObject = document.getElementsByClassName('choiceContainer__section');
     var game__playContainer__article = document.getElementsByClassName('game__playContainer__article');
     var bestScore = document.getElementById('bestScore');
-    var footer = document.getElementsByClassName('footer')[0]
+    var footer = document.getElementsByClassName('footer')[0];
+    var imgObject1 = document.createElement('img');
+    var arrayClass = ['rock', 'paper', 'scissors'];
+    var arrayIndex = 0;
 
     playButton.onclick = function letsPlay() {
       gsap.to(playButton, {
         opacity: 0,
+        duration: 0.3
       })
 
       setTimeout(() => {
+        gsap.fromTo(playContainer, {
+        opacity: 0,
+      },
+      {
+        opacity: 1
+      })
+
         playButton.style.display = "none";
         scoreContainer.style.display = "flex";
         playContainer.style.display = "flex";
         document.body.removeChild(document.getElementsByClassName('home')[0])
         document.body.insertBefore(playContainer, footer)
-      }, 500);
+      }, 300);
     }
 
     rulesButton.onclick = function showRules() {
@@ -241,11 +252,15 @@
             break;
         }
 
-        // loopRobot();
+        gsap.fromTo(playerChoice, {
+        scale: 0,
+        },
+        {
+          scale: 1,
+          duration: 0.3
+        })
 
-        setTimeout(() => {
-          robotChoose();
-        }, 500);
+        robotChoose();
       }
     }
 
@@ -259,14 +274,6 @@
       index_data--;
     }
 
-    //loop robot animation
-    // function loopRobot() {
-    // gsap
-    // .set(game__playContainer__article[1].firstElementChild, { class += "scissors" })
-    // .to(game__playContainer__article[1].firstElementChild, { css: { className: "+= paper" } })
-    // .to(game__playContainer__article[1].firstElementChild, { css: { className: "+= rock" } })
-    // }
-
     //robot choose object randomly
     function robotChoose() {
       if (game__playContainer__article[1].firstElementChild.classList.contains('game__playContainer__article__div__empty')) {
@@ -278,73 +285,105 @@
         game__playContainer__article[1].lastElementChild.innerHTML = "the house picked";
       }
 
-      // var arrayIndex = [1, 2, 3];
-
-      // var robotIndex = Math.floor(Math.random() * arrayIndex.length);
-
       var robotIndex = Math.floor(Math.random() * 3);
-      var imgObject1 = document.createElement('img');
 
-      switch (robotIndex) {
-        case 0:
-          if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('paper')
-          }
-          if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('scissors')
-          }
+      var intervalLoop = setInterval(loopAnimation, 100);
 
-          game__playContainer__article[1].firstElementChild.classList.add('rock');
+      setTimeout(() => {
+        clearInterval(intervalLoop);
 
-          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
-            imgObject1.src = "./images/icon-rock.svg";
-            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
-          }
-          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
-            game__playContainer__article[1].firstElementChild.firstElementChild.src = "./images/icon-rock.svg"
-          }
-          break;
+        switch (robotIndex) {
+          case 0:
+            if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('paper')
+            }
+            if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('scissors')
+            }
 
-        case 1:
-          if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('rock')
-          }
-          if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('scissors')
-          }
+            game__playContainer__article[1].firstElementChild.classList.add('rock');
 
-          game__playContainer__article[1].firstElementChild.classList.add('paper');
+            if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+              imgObject1.src = "./images/icon-rock.svg";
+              game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+            }
+            else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
+              game__playContainer__article[1].firstElementChild.firstElementChild.src = "./images/icon-rock.svg"
+            }
+            break;
 
-          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
-            imgObject1.src = "./images/icon-paper.svg";
-            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
-          }
-          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
-            game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-paper.svg';
-          }
-          break;
+          case 1:
+            if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('rock')
+            }
+            if (game__playContainer__article[1].firstElementChild.classList.contains('scissors')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('scissors')
+            }
 
-        case 2:
-          if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('paper')
-          }
-          if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
-            game__playContainer__article[1].firstElementChild.classList.remove('rock')
-          }
+            game__playContainer__article[1].firstElementChild.classList.add('paper');
 
-          game__playContainer__article[1].firstElementChild.classList.add('scissors');
+            if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+              imgObject1.src = "./images/icon-paper.svg";
+              game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+            }
+            else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('scissors')) {
+              game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-paper.svg';
+            }
+            break;
 
-          if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
-            imgObject1.src = "./images/icon-scissors.svg";
-            game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
-          }
-          else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock')) {
-            game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-scissors.svg';
-          }
-          break;
+          case 2:
+            if (game__playContainer__article[1].firstElementChild.classList.contains('paper')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('paper')
+            }
+            if (game__playContainer__article[1].firstElementChild.classList.contains('rock')) {
+              game__playContainer__article[1].firstElementChild.classList.remove('rock')
+            }
+
+            game__playContainer__article[1].firstElementChild.classList.add('scissors');
+
+            if (!game__playContainer__article[1].firstElementChild.firstElementChild) {
+              imgObject1.src = "./images/icon-scissors.svg";
+              game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+            }
+            else if (game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('paper') || game__playContainer__article[1].firstElementChild.firstElementChild.src.includes('rock')) {
+              game__playContainer__article[1].firstElementChild.firstElementChild.src = './images/icon-scissors.svg';
+            }
+            break;
+        }
+
+        countScore()
+      }, 700);
+
+    }
+
+    //Loop robot choice animation
+    function loopAnimation(){
+      game__playContainer__article[1].firstElementChild.classList.add(arrayClass[arrayIndex]);
+      
+      arrayIndex++;
+        
+      if(arrayIndex == arrayClass.length){
+        arrayIndex = 0;
       }
 
-      countScore()
+      if(game__playContainer__article[1].firstElementChild.classList.contains('rock')){
+        game__playContainer__article[1].firstElementChild.classList.remove('scissors');
+
+        imgObject1.src = "./images/icon-rock.svg";
+        game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+      }
+      if(game__playContainer__article[1].firstElementChild.classList.contains('paper')){
+        game__playContainer__article[1].firstElementChild.classList.remove('rock');
+
+        imgObject1.src = "./images/icon-paper.svg";
+        game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+      }
+      if(game__playContainer__article[1].firstElementChild.classList.contains('scissors')){
+        game__playContainer__article[1].firstElementChild.classList.remove('paper');
+
+        imgObject1.src = "./images/icon-scissors.svg";
+        game__playContainer__article[1].firstElementChild.appendChild(imgObject1);
+      }
     }
 
     //SCORE
