@@ -22,7 +22,7 @@ body {
       -ms-flex-align: center;
           align-items: center;
   min-height: 100vh;
-  height: -webkit-fill-available;
+  min-height: -webkit-fill-available;
 }
 
 #shadow {
